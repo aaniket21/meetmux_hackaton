@@ -92,7 +92,9 @@ class SCARFLoss(nn.Module):
         return loss
 
 
-def train_scarf(model: SCARF, dataset: SCARFDataset, epochs: int = 10, batch_size: int = 256, lr: float = 1e-3) -> float:
+def train_scarf(model: SCARF, dataset: SCARFDataset, epochs: int = 10, batch_size: int = 256, lr: float = 1e-3, seed: int = 42) -> float:
+    torch.manual_seed(seed)
+    np.random.seed(seed)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     criterion = SCARFLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
